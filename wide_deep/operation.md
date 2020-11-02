@@ -70,7 +70,7 @@ python train.py --data_path=data/one_percent/mindrecord
 
 验证结果
 ```
-python eval.py --data_path=data/one_percent/mindrecord --ckpt_path=python eval.py --data_path=data/one_percent/mindrecord --ckpt_path=widedeep_train-1_42.ckpt
+python eval.py --data_path=data/one_percent/mindrecord --ckpt_path=widedeep_train-1_42.ckpt
 ```
 
 
