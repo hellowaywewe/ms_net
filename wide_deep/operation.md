@@ -15,18 +15,19 @@ cd /root/workspace/wide_deep
 下载事先准备好的mindrecord和.ckpt文件
 ```
 # 从华为云obs上下载经由10%Criteo数据集训练生成的mindrecord数据集文件
-wget https://wide-deep-21.obs.cn-north-4.myhuaweicloud.com:443/mini_demo.txt?AccessKeyId=PQ7DQUATQUMX3VMMPIPM&Expires=1606927781&Signature=jiZEzhqIBRoIwgb4jLEKcNZQLLY%3D
+wget https://wide-deep-21.obs.cn-north-4.myhuaweicloud.com/train_demo.tar.gz
+tar -zxvf train_demo.tar.gz
 mkdir -p data/ten_percent
-tar 
+mv mindrecord data/ten_percent
 # 从华为云obs上下载经由10%Criteo数据集训练生成的.ckpt文件
-wget 
+wget https://wide-deep-21.obs.cn-north-4.myhuaweicloud.com/wide_deep.ckpt
 ```
 
 ##### 进阶作业准备
 准备Criteo数据集（非全量），从华为云obs上下载Criteo数据集mini_demo.txt（全量数据的1%）
 ```
 mkdir -p data/one_percent
-wget https://wide-deep-21.obs.cn-north-4.myhuaweicloud.com:443/mini_demo.txt?AccessKeyId=PQ7DQUATQUMX3VMMPIPM&Expires=1606927781&Signature=jiZEzhqIBRoIwgb4jLEKcNZQLLY%3D
+wget https://wide-deep-21.obs.cn-north-4.myhuaweicloud.com/mini_demo.txt
 mv mini_demo.txt ./data/one_percent
 ```
 
@@ -53,7 +54,7 @@ You should consider upgrading via the 'pip install --upgrade pip' command.
 验证结果
 ```
 cd /wide_deep
-python eval.py --data_path=data/ten_percent/mindrecord --ckpt_path=
+python eval.py --data_path=data/ten_percent/mindrecord --ckpt_path=wide_deep.ckpt
 ```
 
 ##### 进阶作业要求
@@ -69,7 +70,7 @@ python train.py --data_path=data/one_percent/mindrecord
 
 验证结果
 ```
-python eval.py --data_path=data/one_percent/mindrecord --ckpt_path=
+python eval.py --data_path=data/one_percent/mindrecord --ckpt_path=python eval.py --data_path=data/one_percent/mindrecord --ckpt_path=widedeep_train-1_42.ckpt
 ```
 
 
