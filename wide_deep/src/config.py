@@ -24,9 +24,9 @@ def argparse_init():
                         help="device where the code will be implemented. (Default: Ascend)")
     parser.add_argument("--data_path", type=str, default="/wide_deep/data/one_percent/mindrecord",
                         help="mindrecord dataset directory")
-    parser.add_argument("--epochs", type=int, default=15, help="Total train epochs")
+    parser.add_argument("--epochs", type=int, default=1, help="Total train epochs")
     parser.add_argument("--full_batch", type=int, default=0, help="Enable loading the full batch ")
-    parser.add_argument("--batch_size", type=int, default=16000, help="Training batch size.")
+    parser.add_argument("--batch_size", type=int, default=10000, help="Training batch size.")
     parser.add_argument("--eval_batch_size", type=int, default=16000, help="Eval batch size.")
     parser.add_argument("--field_size", type=int, default=39, help="The number of features.")
     parser.add_argument("--vocab_size", type=int, default=200000, help="The total features of dataset.")
