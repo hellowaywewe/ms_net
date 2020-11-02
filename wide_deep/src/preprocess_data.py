@@ -152,7 +152,7 @@ def statsdata(file_path, dict_output_path, recommendation_dataset_stats_dict, de
                 print("Found line length: {}, suppose to be {}, the line is {}".format(len(items),
                                                                                        dense_dim + slot_dim + 1, line))
                 continue
-            if count % 1000000 == 0:
+            if count % 100000 == 0:
                 print("Have handled {}w lines.".format(count // 10000))
             values = items[1: dense_dim + 1]
             cats = items[dense_dim + 1:]
@@ -200,7 +200,7 @@ def random_split_trans2mindrecord(input_file_path, output_file_path, recommendat
         test_part_number = 0
         for i, line in enumerate(file_in):
             count += 1
-            if count % 1000000 == 0:
+            if count % 100000 == 0:
                 print("Have handle {}w lines.".format(count // 10000))
             line = line.strip("\n")
             items = line.split("\t")
@@ -260,23 +260,26 @@ def random_split_trans2mindrecord(input_file_path, output_file_path, recommendat
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Recommendation dataset")
-    parser.add_argument("--data_path", type=str, default="./recommendation_dataset/", help='The path of the data file')
+    parser.add_argument("--data_path", type=str, default="/wide_deep/data/one_percent/",
+                        help='The path of the data file')
+    parser.add_argument("--data_file", type=str, default="mini_demo.txt", help='the data file to be processed')
     parser.add_argument("--dense_dim", type=int, default=13, help='The number of your continues fields')
     parser.add_argument("--slot_dim", type=int, default=26,
                         help='The number of your sparse fields, it can also be called catelogy features.')
     parser.add_argument("--threshold", type=int, default=100,
                         help='Word frequency below this will be regarded as OOV. It aims to reduce the vocab size')
-    parser.add_argument("--train_line_count", type=int, help='The number of examples in your dataset')
+    parser.add_argument("--train_line_count", type=int, default=458405, help='The number of examples in your dataset')
     parser.add_argument("--skip_id_convert", type=int, default=0, choices=[0, 1],
                         help='Skip the id convert, regarding the original id as the final id.')
 
     args, _ = parser.parse_known_args()
     data_path = args.data_path
+    data_file = args.data_file
 
     target_field_size = args.dense_dim + args.slot_dim
     stats = StatsDict(field_size=target_field_size, dense_dim=args.dense_dim, slot_dim=args.slot_dim,
                       skip_id_convert=args.skip_id_convert)
-    data_file_path = data_path + "origin_data/train.txt"
+    data_file_path = data_path + data_file
     stats_output_path = data_path + "stats_dict/"
     mkdir_path(stats_output_path)
     statsdata(data_file_path, stats_output_path, stats, dense_dim=args.dense_dim, slot_dim=args.slot_dim)
@@ -284,7 +287,7 @@ if __name__ == '__main__':
     stats.load_dict(dict_path=stats_output_path, prefix="")
     stats.get_cat2id(threshold=args.threshold)
 
-    in_file_path = data_path + "origin_data/train.txt"
+    in_file_path = data_path + data_file
     output_path = data_path + "mindrecord/"
     mkdir_path(output_path)
     random_split_trans2mindrecord(in_file_path, output_path, stats, part_rows=2000000,

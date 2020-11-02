@@ -22,8 +22,8 @@ def argparse_init():
     parser = argparse.ArgumentParser(description='WideDeep')
     parser.add_argument("--device_target", type=str, default="GPU", choices=["Ascend", "GPU"],
                         help="device where the code will be implemented. (Default: Ascend)")
-    parser.add_argument("--data_path", type=str, default="/mindrecord",
-                        help="This should be set to the same directory given to the data_download's data_dir argument")
+    parser.add_argument("--data_path", type=str, default="/wide_deep/data/one_percent/mindrecord",
+                        help="mindrecord dataset directory")
     parser.add_argument("--epochs", type=int, default=15, help="Total train epochs")
     parser.add_argument("--full_batch", type=int, default=0, help="Enable loading the full batch ")
     parser.add_argument("--batch_size", type=int, default=16000, help="Training batch size.")
